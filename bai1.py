@@ -1,9 +1,9 @@
-import os
-
 def manage_todo_list():
     tasks = []
+    print("Nhập từng công việc. Để trống và nhấn Enter để kết thúc.")
+    
     while True:
-        task = input("Nhập công việc (Enter để dừng): ").strip()
+        task = input("Nhập công việc: ").strip()
         if not task:
             break
         tasks.append(task)

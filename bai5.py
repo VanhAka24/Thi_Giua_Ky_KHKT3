@@ -13,7 +13,8 @@ def manage_inventory():
         print("0. Dừng lại")
         print("1. Cập nhật thêm 1 mặt hàng mới")
         print("2. Cập nhật số lượng")
-        print("3. Hiển thị biểu đồ")
+        print("3. Xóa mặt hàng")
+        print("4. Hiển thị biểu đồ")
         
         choice = input("Chọn chức năng: ").strip()
         
@@ -27,7 +28,10 @@ def manage_inventory():
             else:
                 try:
                     quantity = int(input("Nhập số lượng: "))
-                    inventory[item] = max(0, quantity)
+                    if quantity < 0:
+                        print("Lỗi: Số lượng khởi tạo không thể là số âm.")
+                    else:
+                        inventory[item] = quantity
                 except ValueError:
                     print("Lỗi định dạng. Vui lòng nhập số nguyên.")
                     
@@ -36,13 +40,24 @@ def manage_inventory():
             if item in inventory:
                 try:
                     change = int(input("Cập nhật bao nhiêu?: "))
-                    inventory[item] = max(0, inventory[item] + change)
+                    if inventory[item] + change < 0:
+                        print("Lỗi: Số lượng xuất vượt quá số lượng tồn kho hiện tại.")
+                    else:
+                        inventory[item] += change
                 except ValueError:
                     print("Lỗi định dạng. Vui lòng nhập số nguyên.")
             else:
                 print("Mặt hàng không tồn tại.")
                 
         elif choice == '3':
+            item = input("Nhập tên mặt hàng muốn xóa: ").strip()
+            if item in inventory:
+                del inventory[item]
+                print(f"Đã xóa thành công mặt hàng: {item}")
+            else:
+                print("Mặt hàng không tồn tại.")
+                
+        elif choice == '4':
             if sum(inventory.values()) == 0:
                 print("Kho hàng đang trống hoặc tất cả mặt hàng đều có số lượng 0.")
                 continue
@@ -57,7 +72,7 @@ def manage_inventory():
             plt.show()
             
         else:
-            print("Lựa chọn không hợp lệ, vui lòng chọn từ 0 đến 3.")
+            print("Lựa chọn không hợp lệ, vui lòng chọn từ 0 đến 4.")
 
 if __name__ == "__main__":
     manage_inventory()
