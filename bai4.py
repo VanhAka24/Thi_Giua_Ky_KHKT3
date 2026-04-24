@@ -1,8 +1,15 @@
 import random
 import time
+from datetime import datetime
 
 def play_game():
-    words = ["python", "apple", "river", "student", "teacher"]
+    words = [
+        "python", "machine", "embedded", "firebase", "verilog",
+        "chatbot", "efootball", "cardio", "deadlift", "soroban",
+        "noodle", "cinema", "hanoi", "algorithm", "database",
+        "hardware", "software", "network", "compile", "debug",
+        "server", "memory", "processor", "variable", "function"
+    ]
     secret_word = random.choice(words)
     guessed = set()
     errors = 0
@@ -29,8 +36,10 @@ def play_game():
         print(f"Thua! Đáp án: {secret_word}")
         
     duration = round(time.time() - start_time, 2)
+    now = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
+    
     with open("game_stats.txt", "a", encoding="utf-8") as f:
-        f.write(f"Time: {duration}s | Errors left: {max_errors - errors}\n")
+        f.write(f"[{now}] Thời gian: {duration}s | Lượt sai còn lại: {max_errors - errors}\n")
 
 if __name__ == "__main__":
     play_game()
