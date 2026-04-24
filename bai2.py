@@ -1,18 +1,18 @@
-import string
+import re
 from collections import Counter
 
 def analyze_text(text):
-    translator = str.maketrans('', '', string.punctuation)
-    words = text.translate(translator).lower().split()
+    clean_text = re.sub(r'[^\w\s]', '', text).lower()
+    words = clean_text.split()
     
     if not words:
         return
         
     total_words = len(words)
-    most_common = Counter(words).most_common(1)[0][0]
+    most_common_word, frequency = Counter(words).most_common(1)[0]
     
     print(f"Tổng số từ: {total_words}")
-    print(f"Từ xuất hiện nhiều nhất: {most_common}")
+    print(f"Từ xuất hiện nhiều nhất: {most_common_word} ({frequency} lần)")
 
 if __name__ == "__main__":
     user_input = input("Nhập văn bản: ")
